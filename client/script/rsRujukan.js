@@ -1,14 +1,4 @@
-$(document).ready(() => {
-  const selectedRs = JSON.parse(localStorage.getItem("selectedRs"))
-
-  if (selectedRs) {
-    $("#list-rujukan").hide();
-    $("#main-detail-rujukan").show();
-  } else {
-    $("#list-rujukan").show();
-    $("#main-detail-rujukan").hide();
-  }
-
+const getDataHospital = () => {
   $.ajax({
     url: 'http://localhost:3000/dataHospital',
     method: "GET",
@@ -31,18 +21,18 @@ $(document).ready(() => {
   .fail( err => {
     console.log(err);
   })
+}
 
-  // $(".item-rs").on("click", () => {
-  //   console.log('test');
-  //   setTimeout(() => {
-  //     const selectedRs = JSON.parse(localStorage.getItem("selectedRs"))
-  //     $("#detail-rujukan-name").html(selectedRs.name);
-  //     $("#detail-rujukan-address").html(selectedRs.address);
-  //     $("#detail-rujukan-phone").html(selectedRs.phone);
-  //     $("#list-rujukan").hide();
-  //     $("#main-detail-rujukan").show();
-  //   }, 1000)
-  // })
+$(document).ready(() => {
+  const selectedRs = JSON.parse(localStorage.getItem("selectedRs"))
+
+  if (selectedRs) {
+    $("#list-rujukan").hide();
+    $("#main-detail-rujukan").show();
+  } else {
+    $("#list-rujukan").show();
+    $("#main-detail-rujukan").hide();
+  }
 
 });
 
@@ -53,7 +43,9 @@ $(document).on("click", ".item-rs", () => {
     $("#detail-rujukan-address").html(selectedRs.address);
     $("#detail-rujukan-phone").html(selectedRs.phone);
     $("#list-rujukan").hide();
+    $("#title-list-rujukan").hide();
     $("#main-detail-rujukan").show();
-    $("#map-canvas").attr("src", `https://maps.google.com/maps?width=520&amp;height=400&amp;hl=en&amp;q=${selectedRs.latitude},${selectedRs.longtitude}&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;&output=embed`)
+    $("#map-canvas").attr("src", `https://www.google.com/maps/embed/v1/place?key=AIzaSyC4OuqQYjyRGEAt5_nX2ECwA_pr0u4qvyo
+    &q=${selectedRs.latitude},${selectedRs.longtitude}`)
   }, 1000)
 })
