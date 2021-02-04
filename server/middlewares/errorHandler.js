@@ -8,6 +8,7 @@ module.exports = (err, req, res, next) => {
     } else if (err.name === 'ClientError') {
         res.status(err.status).json({ error: err.msg })
     } else {
+        console.log(err);
         res.status(500).json({ error: 'Internal Server Error' })
     }
 } 
