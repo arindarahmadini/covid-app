@@ -55,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User',
     hooks: {
-      beforeCreate: (user, opt) => {
+      beforeValidate: (user, opt) => {
         user.password = hashPass(user.password)
       }
     }
