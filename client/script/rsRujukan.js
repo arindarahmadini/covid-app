@@ -37,6 +37,16 @@ $(document).ready(() => {
     },
   ];
 
+  const selectedRs = JSON.parse(localStorage.getItem("selectedRs"))
+
+  if (selectedRs) {
+    $("#list-rujukan").hide();
+    $("#main-detail-rujukan").show();
+  } else {
+    $("#list-rujukan").show();
+    $("#main-detail-rujukan").hide();
+  }
+
   dataDummy.forEach( res => {
     const dataStringify = JSON.stringify(res)
     $("#list-rujukan").append(`
@@ -48,10 +58,18 @@ $(document).ready(() => {
     `);
   })
 
+  const generateData = () => {
+    const selectedRs = JSON.parse(localStorage.getItem("selectedRs"))
+    $("#detail-rujukan-name").html(selectedRs.name);
+    $("#detail-rujukan-address").html(selectedRs.address);
+    $("#detail-rujukan-phone").html(selectedRs.phone);
+    $("#list-rujukan").hide();
+    $("#main-detail-rujukan").show();
+  }
+
   $(".item-rs").on("click", () => {
     setTimeout(() => {
       const selectedRs = JSON.parse(localStorage.getItem("selectedRs"))
-      console.log(selectedRs);
       $("#detail-rujukan-name").html(selectedRs.name);
       $("#detail-rujukan-address").html(selectedRs.address);
       $("#detail-rujukan-phone").html(selectedRs.phone);
@@ -60,13 +78,4 @@ $(document).ready(() => {
     }, 1000)
   })
 
-  const selectedRs = JSON.parse(localStorage.getItem("selectedRs"))
-
-  if (selectedRs) {
-    $("#list-rujukan").hide();
-    $("#main-detail-rujukan").show();
-  } else {
-    $("#list-rujukan").show();
-    $("#main-detail-rujukan").hide();
-  }
 });
