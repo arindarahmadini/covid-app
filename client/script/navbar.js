@@ -12,5 +12,6 @@ $(document).ready(() => {
   $("#logout-nav").on("click", (e) => {
     e.preventDefault()
     localStorage.clear()
+    auth()
   })
 })
