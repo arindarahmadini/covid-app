@@ -6,11 +6,11 @@ const externalApi = require('./externalApi');
 
 router.post('/register', Controller.register)
 router.post('/login', Controller.login)
-router.use(externalApi)
 
 router.use(authenticate)
 router.get('/datacovid', Controller.dataCovid)
 // router.post('/updateuser', authorize, Controller.dataCovid)
 // router.put('/updateuserprovince', authorize, Controller.dataCovid)
+router.use(externalApi)
 
 module.exports = router
