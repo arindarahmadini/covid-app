@@ -83,7 +83,7 @@ class UserController {
                 next(err)
             })
     }
-    static signInWithGoogle(req,res,next){
+    static async signInWithGoogle(req,res,next){
         try {
             const client = new OAuth2Client(process.env.goauth_clientid);
             let token = req.body.token;

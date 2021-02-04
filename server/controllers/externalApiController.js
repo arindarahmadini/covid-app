@@ -4,7 +4,7 @@ class externalApiController{
 
     static async getDataHospital(req,res,next){
         try{
-            const prov = 'DKI Jakarta'
+            const prov = req.decoded.province
             let dataHospital = await axios({
                 method: 'GET',
                 url: 'https://dekontaminasi.com/api/id/covid19/hospitals'

@@ -7,9 +7,11 @@ $(document).ready(() => {
   })
   $("#rs-rujukan-nav").on("click", (e) => {
     e.preventDefault()
+    $("#list-rujukan").empty()
+    getDataHospital()
     $("#detail-hospital").show()
     $("#home").hide()
-    generateData()
+    $("#register").hide()
   })
   $("#logout-nav").on("click", (e) => {
     e.preventDefault()
@@ -27,6 +29,7 @@ $(document).ready(() => {
     $("#email-section-input").hide()
     $("#home").hide()
     $("#direct-login").hide()
+    $("#detail-hospital").hide()
     dropdownProvinsi()
   })
 })
