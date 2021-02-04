@@ -2,12 +2,14 @@ $(document).ready(() => {
   $("#home-nav").on("click", (e) => {
     e.preventDefault()
     $("#detail-hospital").hide()
+    $("#register").hide()
     $("#home").show()
   })
   $("#rs-rujukan-nav").on("click", (e) => {
     e.preventDefault()
     $("#detail-hospital").show()
     $("#home").hide()
+    generateData()
   })
   $("#logout-nav").on("click", (e) => {
     e.preventDefault()

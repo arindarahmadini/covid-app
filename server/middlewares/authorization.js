@@ -1,15 +1,12 @@
-const { Todo } = require('../models/index')
+const { User } = require('../models/index')
 
 const authorize = function (req, res, next) {
-    Todo.findOne({ where: { id: req.params.id } })
+    User.findOne({ where: { email: req.decoded.email } })
         .then((data) => {
             if (!data) {
                 throw { name: 'ClientError', msg: 'Data Not Found', status: 404 }
-            } else if (data.UserId !== req.decoded.id) {
-                throw { name: 'ClientError', msg: 'You dont have authorization to access', status: 401 }
-            } else {
-                next();
             }
+            next();
         })
         .catch((err) => {
             next(err)

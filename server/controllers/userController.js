@@ -65,6 +65,25 @@ class UserController {
             })
     }
 
+    static updateDataUser(req, res, next) {
+        const { name, password, province } = req.body
+        User.update({ name, password, province },
+            {
+                where: {
+                    email: req.decoded.email
+                },
+                returning: true
+            })
+            .then(user => {
+                console.log(user)
+                res.status(200).json({ msg: 'Update Success', name: user.name, password: user.password, province: user.province })
+            })
+            .catch(err => {
+                console.log(err)
+                next(err)
+            })
+    }
+
 
 }
 
