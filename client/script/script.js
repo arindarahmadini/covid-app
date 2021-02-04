@@ -10,6 +10,7 @@ function auth() {
         $("#rs-rujukan-nav").show()
         $("#logout-nav").show()
         $("#updateProvinsi").hide()
+        getDataCovid()
     } else {
         $("#detail-hospital").hide()
         $("#home-nav").hide()
@@ -71,7 +72,7 @@ function register() {
             console.log(xhr, text);
         })
         .always(_ => {
-            $("#register").trigger("reset")
+            $("#form-register").trigger("reset")
         })
 }
 
@@ -107,7 +108,7 @@ function update() {
             console.log(xhr, text)
         })
         .always(_ => {
-            $("#register").trigger("reset")
+            $("#form-register").trigger("reset")
         })
 }
 
@@ -151,8 +152,35 @@ function dropdownProvinsi() {
 }
 
 function getDataCovid(){
-    
+    const format = (num) => {
+        const n = String(num),
+            p = n.indexOf(".");
+        return n.replace(/\d(?=(?:\d{3})+(?:\.|$))/g, (m, i) =>
+            p < 0 || i < p ? `${m}.` : m
+        );
+    };
+
+    $.ajax({
+        url: `${baseUrl}/datacovid/${localStorage.getItem("province")}`,
+        method: "GET",
+        headers: {
+            token: localStorage.getItem("access_token")
+        },
+    })
+        .done((data) => {
+            $("#provinsi-name").html(format(data.Provinsi));
+            $("#positif").html(format(data.Kasus_Posi));
+            $("#sembuh").html(format(data.Kasus_Semb));
+            $("#meninggal").html(format(data.Kasus_Meni));
+            $("#total-kasus").html(
+                format(data.Kasus_Meni + data.Kasus_Semb + data.Kasus_Posi)
+            );
+        })
+        .fail((err) => {
+            console.log(err, "err");
+        });
 }
+
 $(document).ready(() => {
     auth()
     $('#form-login').on("submit", (e) => {
@@ -173,36 +201,9 @@ $(document).ready(() => {
         if (localStorage.getItem("access_token")) {
             update()
         } else {
-            $("#register").trigger("reset")
             register()
         }
 
-        const format = (num) => {
-            const n = String(num),
-                p = n.indexOf(".");
-            return n.replace(/\d(?=(?:\d{3})+(?:\.|$))/g, (m, i) =>
-                p < 0 || i < p ? `${m}.` : m
-            );
-        };
-        
-        $.ajax({
-            url: `${baseUrl}/datacovid/${localStorage.getItem("province")}`,
-            method: "GET",
-            headers: {
-                token: localStorage.getItem("access_token")
-            },
-        })
-            .done((data) => {
-                $("#provinsi-name").html(format(data.Provinsi));
-                $("#positif").html(format(data.Kasus_Posi));
-                $("#sembuh").html(format(data.Kasus_Semb));
-                $("#meninggal").html(format(data.Kasus_Meni));
-                $("#total-kasus").html(
-                    format(data.Kasus_Meni + data.Kasus_Semb + data.Kasus_Posi)
-                );
-            })
-            .fail((err) => {
-                console.log(err, "err");
-            });
+        getDataCovid()
     });
 });
