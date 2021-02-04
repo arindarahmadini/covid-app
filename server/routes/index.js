@@ -8,7 +8,7 @@ router.post('/login', Controller.login)
 
 router.use(authenticate)
 router.get('/datacovid', Controller.dataCovid)
-// router.post('/updateuser', authorize, Controller.dataCovid)
+router.put('/updateuser', authorize, Controller.updateDataUser)
 // router.put('/updateuserprovince', authorize, Controller.dataCovid)
 
 module.exports = router
