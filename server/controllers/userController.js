@@ -31,7 +31,7 @@ class UserController {
                     email: user.email,
                     province: user.province
                 })
-                res.status(200).json({ access_token })
+                res.status(200).json({ access_token, province: user.province, name: user.name})
             })
             .catch(err => {
                 next(err)
@@ -39,7 +39,8 @@ class UserController {
     }
 
     static dataCovid(req, res, next) {
-        const prov = req.decoded.province
+        const prov = req.params.provinsi
+        console.log(prov)
         User.findOne({
             where: {
                 province: prov

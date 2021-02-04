@@ -7,7 +7,7 @@ router.post('/register', Controller.register)
 router.post('/login', Controller.login)
 
 router.use(authenticate)
-router.get('/datacovid', Controller.dataCovid)
+router.get('/datacovid/:provinsi', Controller.dataCovid)
 router.put('/updateuser', authorize, Controller.updateDataUser)
 // router.put('/updateuserprovince', authorize, Controller.dataCovid)
 
