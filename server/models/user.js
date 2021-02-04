@@ -2,6 +2,9 @@
 const {
   Model
 } = require('sequelize');
+
+const { hashPass } = require('../helpers/bcrypt')
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -14,10 +17,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Please enter your full name'
+        }
+      }
+    },
     email: {
       type: DataTypes.STRING,
       validate: {
+        notEmpty: {
+          msg: 'Please enter your email'
+        },
         isEmail: {
           args: true,
           msg: 'Invalid email format'
@@ -28,11 +41,24 @@ module.exports = (sequelize, DataTypes) => {
         msg: 'Email has been used'
       }
     },
-    password: DataTypes.STRING,
+    password: {
+      type: DataTypes.STRING,
+      is: /^[0-9a-f]{64}$/i,
+      validate: {
+        notEmpty: {
+          msg: 'Please enter your password'
+        }
+      }
+    },
     province: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',
+    hooks: {
+      beforeCreate: (user, opt) => {
+        user.password = hashPass(user.password)
+      }
+    }
   });
   return User;
 };
