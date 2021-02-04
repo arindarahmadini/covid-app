@@ -1,42 +1,4 @@
 $(document).ready(() => {
-  const dataDummy = [
-    {
-      name: "RS UMUM DAERAH  DR. ZAINOEL ABIDIN",
-      address: "JL. TGK DAUD BEUREUEH, NO. 108 B. ACEH",
-      region: "KOTA BANDA ACEH, ACEH",
-      phone: "(0651) 34565",
-      province: "Aceh",
-    },
-    {
-      name: "RS UMUM DAERAH CUT MEUTIA KAB. ACEH UTARA",
-      address: "JL. BANDA ACEH-MEDAN KM.6 BUKET RATA LHOKSEUMAWE",
-      region: "KOTA LHOKSEUMAWE, ACEH",
-      phone: "(0645) 46334",
-      province: "Aceh",
-    },
-    {
-      name: "RSUP SANGLAH",
-      address: "JL. DIPONEGORO DENPASAR BALI",
-      region: "KOTA DENPASAR, BALI",
-      phone: "(0361) 227912",
-      province: "Bali",
-    },
-    {
-      name: "RS UMUM DAERAH KAB. BULELENG",
-      address: "JL. NGURAH RAI 30 SINGARAJA",
-      region: "BULELENG, BALI",
-      phone: "(0362) 22046",
-      province: "Bali",
-    },
-    {
-      name: "RS UMUM DAERAH SANJIWANI GIANYAR",
-      address: "JL. CIUNG WENARA NO.2 GIANYAR",
-      region: "GIANYAR, BALI",
-      phone: "(0361) 943049",
-      province: "Bali",
-    },
-  ];
-
   const selectedRs = JSON.parse(localStorage.getItem("selectedRs"))
 
   if (selectedRs) {
@@ -47,35 +9,51 @@ $(document).ready(() => {
     $("#main-detail-rujukan").hide();
   }
 
-  dataDummy.forEach( res => {
-    const dataStringify = JSON.stringify(res)
-    $("#list-rujukan").append(`
-      <div class="card" onclick='localStorage.setItem("selectedRs", JSON.stringify(${dataStringify}))' style="margin-top: 10px; cursor: pointer;">
-        <div class="card-body item-rs">
-          ${res.name}
+  $.ajax({
+    url: 'http://localhost:3000/dataHospital',
+    method: "GET",
+    headers: {
+      token: localStorage.getItem("access_token")
+    }
+  })
+  .done( data => {
+    data.forEach( res => {
+      const dataStringify = JSON.stringify(res)
+      $("#list-rujukan").append(`
+        <div class="card" onclick='localStorage.setItem("selectedRs", JSON.stringify(${dataStringify}))' style="margin-top: 10px; cursor: pointer;">
+          <div class="card-body item-rs">
+            ${res.name}
+          </div>
         </div>
-      </div>
-    `);
+      `);
+    })
+  })
+  .fail( err => {
+    console.log(err);
   })
 
-  const generateData = () => {
+  // $(".item-rs").on("click", () => {
+  //   console.log('test');
+  //   setTimeout(() => {
+  //     const selectedRs = JSON.parse(localStorage.getItem("selectedRs"))
+  //     $("#detail-rujukan-name").html(selectedRs.name);
+  //     $("#detail-rujukan-address").html(selectedRs.address);
+  //     $("#detail-rujukan-phone").html(selectedRs.phone);
+  //     $("#list-rujukan").hide();
+  //     $("#main-detail-rujukan").show();
+  //   }, 1000)
+  // })
+
+});
+
+$(document).on("click", ".item-rs", () => {
+  setTimeout(() => {
     const selectedRs = JSON.parse(localStorage.getItem("selectedRs"))
     $("#detail-rujukan-name").html(selectedRs.name);
     $("#detail-rujukan-address").html(selectedRs.address);
     $("#detail-rujukan-phone").html(selectedRs.phone);
     $("#list-rujukan").hide();
     $("#main-detail-rujukan").show();
-  }
-
-  $(".item-rs").on("click", () => {
-    setTimeout(() => {
-      const selectedRs = JSON.parse(localStorage.getItem("selectedRs"))
-      $("#detail-rujukan-name").html(selectedRs.name);
-      $("#detail-rujukan-address").html(selectedRs.address);
-      $("#detail-rujukan-phone").html(selectedRs.phone);
-      $("#list-rujukan").hide();
-      $("#main-detail-rujukan").show();
-    }, 1000)
-  })
-
-});
+    $("#map-canvas").attr("src", `https://maps.google.com/maps?width=520&amp;height=400&amp;hl=en&amp;q=${selectedRs.latitude},${selectedRs.longtitude}&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;&output=embed`)
+  }, 1000)
+})

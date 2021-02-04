@@ -8,7 +8,6 @@ $(document).ready(() => {
     e.preventDefault()
     $("#detail-hospital").show()
     $("#home").hide()
-    generateData()
   })
   $("#logout-nav").on("click", (e) => {
     e.preventDefault()
