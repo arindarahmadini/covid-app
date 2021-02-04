@@ -40,6 +40,9 @@
               <a class="nav-link" id="rs-rujukan-nav" href="#">RS Rujukan</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" id="edit-user-nav" href="#">Edit Profile</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" id="logout-nav" href="#">Logout</a>
             </li>
           </ul>
@@ -127,7 +130,7 @@
     <div class="container mb-3" id="register">
       <div class="row justify-content-center">
           <div class="col-lg-6">
-              <div class="mb-3">
+              <div class="mb-3"><br>
                   <h3 id="title-sign"></h3>
               </div>
               <form id="form-register">
@@ -135,13 +138,14 @@
                       <label for="inputNama" class="form-label">Nama</label>
                       <input type="text" class="form-control" id="inputNama">
                   </div>
-                  <div class="mb-3">
+                  <div class="mb-3" id="email-section-input">
                       <label for="inputEmail" class="form-label">Email</label>
                       <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp">
                   </div>
                   <div class="mb-3">
-                      <label for="inputProvinsi" class="form-label">Provinsi</label>
-                      <input type="text" class="form-control" id="inputProvinsi">
+                      <label for="inputProvinsi" class="form-label">Provinsi</label><br>
+                      <select id="provinsi-dropdown" name="provinsi">
+                      </select>
                   </div>
                   <div class="mb-3">
                       <label for="inputPassword" class="form-label">Password</label>
@@ -149,7 +153,7 @@
                   </div>
                   <button type="submit" class="btn btn-primary">Submit</button>
               </form>
-              <p>sudah punya akun? <a href="" id="link-login">Login disini</a></p>
+              <p id="direct-login">sudah punya akun? <a href="" id="link-login">Login disini</a></p>
           </div>
       </div>
   </div>
@@ -159,8 +163,8 @@
   <div class="container mb-3" id="login">
       <div class="row justify-content-center ">
           <div class="col-lg-6">
-              <div class="mb-3">
-                  <h3 id="title-sign"></h3>
+              <div class="mb-3"><br>
+                  <h3 >Login</h3>
               </div>
               <form id="form-login">
                   <div class="mb-3">
@@ -173,11 +177,30 @@
                   </div>
                   <button type="submit" class="btn btn-primary">Submit</button>
               </form>
-              <p>belum punya akun? <a href="" id="link-register">Register disini</a></p>
+                <p id="direct-register">belum punya akun? <a href="" id="link-register">Register disini</a></p>
           </div>
       </div>
   </div>
-  <!--END: SIGN IN-->
+  <!--END: LOGIN-->
+
+  <!--START: updateProvince-->
+  <div class="container mb-3" id="updateProvinsi">
+    <div class="row justify-content-center ">
+        <div class="col-lg-6">
+            <div class="mb-3"><br>
+                <h3>Update Provinsi</h3>
+            </div>
+            <form id="form-provinsi">
+                <div class="mb-3">
+                    <label for="updateProvinsi" class="form-label">Provinsi</label>
+                    <input type="text" class="form-control" id="updateProvinsi">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!--END: LOGIN-->
 
     <!-- Optional JavaScript; choose one of the two! -->
 

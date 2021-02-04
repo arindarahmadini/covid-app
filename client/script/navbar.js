@@ -2,6 +2,7 @@ $(document).ready(() => {
   $("#home-nav").on("click", (e) => {
     e.preventDefault()
     $("#detail-hospital").hide()
+    $("#register").hide()
     $("#home").show()
   })
   $("#rs-rujukan-nav").on("click", (e) => {
@@ -14,5 +15,18 @@ $(document).ready(() => {
     e.preventDefault()
     localStorage.clear()
     auth()
+  })
+  $("#edit-user-nav").on("click", (e) => {
+    e.preventDefault()
+    getProfile()
+    $("#title-sign").text("Edit Profile")
+    $("#register").show()
+    $("#inputNama").show()
+    $("#inputPassword").show()
+    $("#inputProvinsi").show()
+    $("#email-section-input").hide()
+    $("#home").hide()
+    $("#direct-login").hide()
+    dropdownProvinsi()
   })
 })
