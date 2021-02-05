@@ -1,67 +1,256 @@
-API Documentation
+# COVID - APP
 
-POST /LOGIN
+### base url : http://localhost:PORT/
+### depedencies :
+- axios
+- bcryptjs
+- cors
+- dotenv
+- express
+- google-auth-library
+- jsonwebtoken
+- nodemon
+- pg
+- sequelize
+- sequelize-cli
 
-Request : email , password |  response : access_token ( 200 )
 
-POST /register
 
-Request : email , name, password, province | response : { email,name,province } (201)
+-----
 
-POST /signingoogle
+## POST /login
 
-Request : id_token google | response : access_token
-
-<hr />
-
-Header : access_token
-
-GET /dataCovid
-
-request : none | response :
-
+### Request
+_Request Header_
 ```
-https://api.kawalcorona.com/indonesia/jawa_tengah
-```
-
-```markup
-[ {
-"name": "dki",
-		"positif": "514",
-		"sembuh": "29",
-		"meninggal": "48"
+{
+"token": "<access_token>"
 }
 ```
 
-GET /dataHospital
+_Request Body_
+```
+{
+    "email": "<input email>",
+	"password": "<input password>",
+}
+```
 
-request : none | response : 
+### Success Response
+_Response (20O - OK)_
+```
+{
+    "access_token": "<access_token>
+    "province": "Jawa Barat",
+    "name": "haloha"
+}
+```
 
-https://dekontaminasi.com/api/id/covid19/hospitals ( filter by provinsi dari user )
+### Error Response
+_Response (400 - Bad Request)_
+```
+{
+    "error": "Invalid email or password!"
+}
+```
 
-```json
+_Response (500 - Internal Server Error)_
+```
+{
+"error": "Internal Server Error"
+}
+```
+
+-----
+
+## POST /register
+
+### Request
+_Request Body_
+```
+{
+    "name": "<input name>",
+    "email": "<input email>",
+	"password": "<input password>",
+    "province": "<input province>"
+}
+```
+
+### Success Response
+_Response (201 - Created)_
+
+```
+{
+    "msg": "Register Success",
+    "id": 4,
+    "name": "haloha",
+    "email": "halo@mail.com",
+    "province": "Jawa Barat"
+}
+```
+
+### Error Response
+_Response (400 - Bad Request)_
+```
+{
+    "error": [
+        "Please enter your full name",
+        "Please enter your email",
+        "Invalid email format"
+    ]
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+"error": "Internal Server Error"
+}
+```
+
+-----
+
+## POST /loginwithgoogle
+
+
+
+-----
+
+## GET /datacovid/:provinsi
+
+### Request
+_Request Header_
+```
+{
+"token": "<access_token>"
+}
+```
+
+### Success Response
+_Response (200 - OK)_
+```
+{
+    "FID": 12,
+    "Kode_Provi": 32,
+    "Provinsi": "Jawa Barat",
+    "Kasus_Posi": 44182,
+    "Kasus_Semb": 32901,
+    "Kasus_Meni": 804
+}
+```
+
+### Error Response
+_Response (401 - Unauthorized)_
+```
+{
+    "msg": "Invalid token"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+"error": "Internal Server Error"
+}
+```
+
+-----
+
+## GET /dataHospital/:provinsi
+
+### Request
+_Request Header_
+```
+{
+"token": "<access_token>"
+}
+```
+
+### Success Response
+_Response (200 - OK)_
+```
 [
-	{
-			hospital_name : string,
-			address : string,
-			region : string,
-			province : string,
-			latitude : string,
-			longtitude : string,
-			phone : string,
-	}
+    {
+        "name": "RS PARU DR. H. A. ROTINSULU",
+        "address": "JL. BUKIT JARIAN NO. 40 BANDUNG",
+        "region": "BANDUNG, JAWA BARAT",
+        "phone": null,
+        "province": "Jawa Barat",
+        "latitude": -6.87742,
+        "longtitude": 107.60652
+    }
 ]
 ```
 
-GET /updateUser
+### Error Response
+_Response (401 - Unauthorized)_
+```
+{
+    "msg": "Invalid token"
+}
+```
 
-request : none || response : dataUser (200)
+_Response (404 - Not Found)_
+```
+{
+	"error": "Data Not Found"
+}
+```
 
-PUT /updateUser
+_Response (500 - Internal Server Error)_
+```
+{
+"error": "Internal Server Error"
+}
+```
 
-request : email , name, province | response : dataUser ( 200 )
+-----
 
-PATCH /updateUserProvince
+## PUT /updateuser
 
-request : province | response : dataUser ( 200 )
+### Request
+_Request Header_
+```
+{
+"token": "<access_token>"
+}
+```
 
+### Success Response
+_Response (200 - OK)_
+```
+{
+    "msg": "Update Success"
+}
+```
+
+### Error Response
+_Response (400 - Bad Request)_
+```
+{
+    "error": [
+        "Please enter your full name",
+    ]
+}
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+    "msg": "Invalid token"
+}
+```
+
+_Response (404 - Not Found)_
+```
+{
+	"error": "Data Not Found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+"error": "Internal Server Error"
+}
+```
