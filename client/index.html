@@ -149,10 +149,10 @@
             <br />
             <h3 id="title-sign"></h3>
           </div>
-          <form id="form-register">
+          <form id="form-register" class="form-select" >
             <div class="mb-3">
               <label for="inputNama" class="form-label">Nama</label>
-              <input type="text" class="form-control" id="inputNama"  />
+              <input type="text" class="form-control" id="inputNama"  required/>
             </div>
             <div class="mb-3" id="email-section-input">
               <label for="inputEmail" class="form-label">Email</label>
@@ -161,13 +161,13 @@
                 class="form-control"
                 id="inputEmail"
                 aria-describedby="emailHelp"
-                
+                required
               />
             </div>
             <div class="mb-3">
               <label for="inputProvinsi" class="form-label">Provinsi</label
               ><br />
-              <select id="provinsi-dropdown" name="provinsi" ></select>
+              <select id="provinsi-dropdown" name="provinsi" required></select>
             </div>
             <div class="mb-3">
               <label for="inputPassword" class="form-label">Password</label>
@@ -175,7 +175,7 @@
                 type="password"
                 class="form-control"
                 id="inputPassword"
-                
+                required
               />
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -205,7 +205,7 @@
                 type="email"
                 class="form-control"
                 id="loginEmail"
-                
+                required
               />
             </div>
             <div class="mb-3">
@@ -213,8 +213,8 @@
               <input
                 type="password"
                 class="form-control"
-                id="loginPassword"
-                
+                id="loginPassword"    
+                required
               />
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -229,25 +229,6 @@
     </div>
     <!--END: LOGIN-->
 
-    <!--START: updateProvince-->
-    <div class="container mb-3" id="updateProvinsi">
-      <div class="row justify-content-center">
-        <div class="col-lg-6">
-          <div class="mb-3">
-            <br />
-            <h3>Update Provinsi</h3>
-          </div>
-          <form id="form-provinsi">
-            <div class="mb-3">
-              <label for="updateProvinsi" class="form-label">Provinsi</label>
-              <input type="text" class="form-control" id="updateProvinsi" />
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
-      </div>
-    </div>
-    <!--END: LOGIN-->
 
     <!-- Optional JavaScript; choose one of the two! -->
 

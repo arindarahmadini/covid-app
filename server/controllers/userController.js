@@ -32,7 +32,7 @@ class UserController {
                     email: user.email,
                     province: user.province
                 })
-                res.status(200).json({ access_token, province: user.province, name: user.name })
+                res.status(200).json({ access_token, province: user.province, name: user.name, email: user.email})
             })
             .catch(err => {
                 next(err)
