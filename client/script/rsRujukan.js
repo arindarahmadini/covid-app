@@ -12,7 +12,7 @@ const getDataHospital = () => {
     `)
 
     $.ajax({
-      url: 'http://localhost:3000/dataHospital',
+      url: `http://localhost:3000/dataHospital/${localStorage.getItem("province")}`,
       method: "GET",
       headers: {
         token: localStorage.getItem("access_token")
