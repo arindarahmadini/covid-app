@@ -4,14 +4,15 @@ function auth() {
     if (localStorage.getItem("access_token")) {
         $("#register").hide()
         $("#login").hide()
+        $(".g-signin2").hide()
         $("#home").show()
         $("#home-nav").show()
         $("#edit-user-nav").show()
         $("#rs-rujukan-nav").show()
         $("#logout-nav").show()
-        $("#updateProvinsi").hide()
         getDataCovid()
     } else {
+        $(".g-signin2").show()
         $("#detail-hospital").hide()
         $("#home-nav").hide()
         $("#rs-rujukan-nav").hide()
@@ -20,7 +21,6 @@ function auth() {
         $("#login").show()
         $("#register").hide()
         $("#home").hide()
-        $("#updateProvinsi").hide()
     }
 }
 
@@ -104,6 +104,7 @@ function update() {
         }
     })
         .done(response => {
+            localStorage.removeItem("dataHospitals")
             auth()
         })
         .fail((xhr, text) => {
@@ -209,3 +210,27 @@ $(document).ready(() => {
         getDataCovid()
     });
 });
+
+function onSignIn(googleUser) {
+    const token = googleUser.getAuthResponse().id_token;
+    $.ajax({
+        url: `${baseUrl}/loginWithGoogle`,
+        method: "POST",
+        data: {
+            token,
+        },
+    })
+        .done((response) => {
+            console.log(response)
+            localStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("province", response.province)
+            localStorage.setItem("name", response.name)
+            auth();
+        })
+        .fail((xhr, text) => {
+            console.log(xhr, text);
+        })
+        .always((_) => {
+            $("#form-login").trigger("reset");
+        });
+}

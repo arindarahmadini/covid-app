@@ -1,81 +1,65 @@
-$(document).ready(() => {
-  const dataDummy = [
-    {
-      name: "RS UMUM DAERAH  DR. ZAINOEL ABIDIN",
-      address: "JL. TGK DAUD BEUREUEH, NO. 108 B. ACEH",
-      region: "KOTA BANDA ACEH, ACEH",
-      phone: "(0651) 34565",
-      province: "Aceh",
-    },
-    {
-      name: "RS UMUM DAERAH CUT MEUTIA KAB. ACEH UTARA",
-      address: "JL. BANDA ACEH-MEDAN KM.6 BUKET RATA LHOKSEUMAWE",
-      region: "KOTA LHOKSEUMAWE, ACEH",
-      phone: "(0645) 46334",
-      province: "Aceh",
-    },
-    {
-      name: "RSUP SANGLAH",
-      address: "JL. DIPONEGORO DENPASAR BALI",
-      region: "KOTA DENPASAR, BALI",
-      phone: "(0361) 227912",
-      province: "Bali",
-    },
-    {
-      name: "RS UMUM DAERAH KAB. BULELENG",
-      address: "JL. NGURAH RAI 30 SINGARAJA",
-      region: "BULELENG, BALI",
-      phone: "(0362) 22046",
-      province: "Bali",
-    },
-    {
-      name: "RS UMUM DAERAH SANJIWANI GIANYAR",
-      address: "JL. CIUNG WENARA NO.2 GIANYAR",
-      region: "GIANYAR, BALI",
-      phone: "(0361) 943049",
-      province: "Bali",
-    },
-  ];
+const getDataHospital = () => {
 
-  const selectedRs = JSON.parse(localStorage.getItem("selectedRs"))
+  const dataHospital = JSON.parse(localStorage.getItem("dataHospitals"))
 
-  if (selectedRs) {
-    $("#list-rujukan").hide();
-    $("#main-detail-rujukan").show();
-  } else {
-    $("#list-rujukan").show();
-    $("#main-detail-rujukan").hide();
-  }
-
-  dataDummy.forEach( res => {
-    const dataStringify = JSON.stringify(res)
+  if (!dataHospital) {
     $("#list-rujukan").append(`
-      <div class="card" onclick='localStorage.setItem("selectedRs", JSON.stringify(${dataStringify}))' style="margin-top: 10px; cursor: pointer;">
-        <div class="card-body item-rs">
-          ${res.name}
+      <div class="text-center" style="margin-top: 200px;">
+        <div class="spinner-border" style="width: 75px;height: 75px" role="status">
+          <span class="visually-hidden">Loading...</span>
         </div>
       </div>
-    `);
-  })
+    `)
 
-  const generateData = () => {
+    $.ajax({
+      url: `http://localhost:3000/dataHospital/${localStorage.getItem("province")}`,
+      method: "GET",
+      headers: {
+        token: localStorage.getItem("access_token")
+      }
+    })
+    .done( data => {
+      localStorage.setItem("dataHospitals", JSON.stringify(data))
+      $("#list-rujukan").empty()
+      data.forEach( res => {
+        const dataStringify = JSON.stringify(res)
+        $("#list-rujukan").append(`
+          <div class="card" onclick='localStorage.setItem("selectedRs", JSON.stringify(${dataStringify}))' style="margin-top: 10px; cursor: pointer;">
+            <div class="card-body item-rs">
+              ${res.name}
+            </div>
+          </div>
+        `);
+      })
+    })
+    .fail( err => {
+      console.log(err);
+    })
+  } else {
+    dataHospital.forEach( res => {
+      const dataStringify = JSON.stringify(res)
+      $("#list-rujukan").append(`
+        <div class="card" onclick='localStorage.setItem("selectedRs", JSON.stringify(${dataStringify}))' style="margin-top: 10px; cursor: pointer;">
+          <div class="card-body item-rs">
+            ${res.name}
+          </div>
+        </div>
+      `);
+    })
+  }
+  
+}
+
+$(document).on("click", ".item-rs", () => {
+  setTimeout(() => {
     const selectedRs = JSON.parse(localStorage.getItem("selectedRs"))
     $("#detail-rujukan-name").html(selectedRs.name);
     $("#detail-rujukan-address").html(selectedRs.address);
     $("#detail-rujukan-phone").html(selectedRs.phone);
     $("#list-rujukan").hide();
+    $("#title-list-rujukan").hide();
     $("#main-detail-rujukan").show();
-  }
-
-  $(".item-rs").on("click", () => {
-    setTimeout(() => {
-      const selectedRs = JSON.parse(localStorage.getItem("selectedRs"))
-      $("#detail-rujukan-name").html(selectedRs.name);
-      $("#detail-rujukan-address").html(selectedRs.address);
-      $("#detail-rujukan-phone").html(selectedRs.phone);
-      $("#list-rujukan").hide();
-      $("#main-detail-rujukan").show();
-    }, 1000)
-  })
-
-});
+    $("#map-canvas").attr("src", `https://www.google.com/maps/embed/v1/place?key=AIzaSyC4OuqQYjyRGEAt5_nX2ECwA_pr0u4qvyo
+    &q=${selectedRs.latitude},${selectedRs.longtitude}`)
+  }, 1000)
+})
