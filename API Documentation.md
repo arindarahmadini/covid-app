@@ -21,28 +21,23 @@
 ## POST /login
 
 ### Request
-_Request Header_
-```
-{
-"token": "<access_token>"
-}
-```
 
 _Request Body_
 ```
 {
     "email": "<input email>",
-	"password": "<input password>",
+    "password": "<input password>",
 }
 ```
 
 ### Success Response
-_Response (20O - OK)_
+_Response (200 - OK)_
 ```
 {
     "access_token": "<access_token>
     "province": "Jawa Barat",
-    "name": "haloha"
+    "name": "haloha",
+    "email": "helshinky@mail.com"
 }
 ```
 
@@ -57,7 +52,7 @@ _Response (400 - Bad Request)_
 _Response (500 - Internal Server Error)_
 ```
 {
-"error": "Internal Server Error"
+    "error": "Internal Server Error"
 }
 ```
 
@@ -71,7 +66,7 @@ _Request Body_
 {
     "name": "<input name>",
     "email": "<input email>",
-	"password": "<input password>",
+    "password": "<input password>",
     "province": "<input province>"
 }
 ```
@@ -104,7 +99,7 @@ _Response (400 - Bad Request)_
 _Response (500 - Internal Server Error)_
 ```
 {
-"error": "Internal Server Error"
+    "error": "Internal Server Error"
 }
 ```
 
@@ -112,7 +107,36 @@ _Response (500 - Internal Server Error)_
 
 ## POST /loginwithgoogle
 
+### Request
+_Request Body_
+```
+{
+    "token": "<google_api_token>"
+}
+```
 
+### Success Response
+_Response (201 - Created)_
+
+```
+{
+    "access_token": "<google_token>",
+    "name": "haloha",
+    "email": "halo@mail.com",
+    "province": "Jawa Barat"
+}
+```
+
+_Response (200 - OK)_
+
+```
+{
+    "access_token": "<google_token>",
+    "name": "haloha",
+    "email": "halo@mail.com",
+    "province": "Jawa Barat"
+}
+```
 
 -----
 
@@ -122,7 +146,7 @@ _Response (500 - Internal Server Error)_
 _Request Header_
 ```
 {
-"token": "<access_token>"
+    "token": "<access_token>"
 }
 ```
 
@@ -150,7 +174,7 @@ _Response (401 - Unauthorized)_
 _Response (500 - Internal Server Error)_
 ```
 {
-"error": "Internal Server Error"
+    "error": "Internal Server Error"
 }
 ```
 
@@ -162,7 +186,7 @@ _Response (500 - Internal Server Error)_
 _Request Header_
 ```
 {
-"token": "<access_token>"
+    "token": "<access_token>"
 }
 ```
 
@@ -193,14 +217,14 @@ _Response (401 - Unauthorized)_
 _Response (404 - Not Found)_
 ```
 {
-	"error": "Data Not Found"
+    "error": "Data Not Found"
 }
 ```
 
 _Response (500 - Internal Server Error)_
 ```
 {
-"error": "Internal Server Error"
+    "error": "Internal Server Error"
 }
 ```
 
@@ -212,7 +236,7 @@ _Response (500 - Internal Server Error)_
 _Request Header_
 ```
 {
-"token": "<access_token>"
+    "token": "<access_token>"
 }
 ```
 
@@ -244,13 +268,13 @@ _Response (401 - Unauthorized)_
 _Response (404 - Not Found)_
 ```
 {
-	"error": "Data Not Found"
+    "error": "Data Not Found"
 }
 ```
 
 _Response (500 - Internal Server Error)_
 ```
 {
-"error": "Internal Server Error"
+    "error": "Internal Server Error"
 }
 ```
