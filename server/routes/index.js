@@ -6,6 +6,7 @@ const externalApi = require('./externalApi');
 
 router.post('/register', Controller.register)
 router.post('/login', Controller.login)
+router.post('/loginWithGoogle', Controller.signInWithGoogle)
 
 router.use(authenticate)
 router.get('/datacovid/:provinsi', Controller.dataCovid)
