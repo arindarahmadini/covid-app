@@ -36,7 +36,6 @@ function login() {
         },
     })
         .done((response) => {
-            console.log(response)
             localStorage.setItem("email", response.email)
             localStorage.setItem("access_token", response.access_token);
             localStorage.setItem("province", response.province)
@@ -70,7 +69,8 @@ function register() {
         .done((response) => {
             auth();
         })
-        .fail((xhr, text) => {
+        .fail((xhr) => {
+            swal("Something Wrong", xhr.responseJSON.error[0], "error");
             console.log(xhr, text);
         })
         .always(_ => {
@@ -204,11 +204,11 @@ $(document).ready(() => {
         e.preventDefault()
         if (localStorage.getItem("access_token")) {
             update()
+            getDataCovid()
         } else {
             register()
         }
 
-        getDataCovid()
     });
 });
 
