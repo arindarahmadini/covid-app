@@ -9,6 +9,9 @@ $(document).ready(() => {
     e.preventDefault()
     $("#list-rujukan").empty()
     getDataHospital()
+    $("#list-rujukan").show()
+    $("#title-list-rujukan").show().html(`Daftar RS Rujukan Di Provinsi ${localStorage.getItem("province")}`)
+    $("#main-detail-rujukan").hide();
     $("#detail-hospital").show()
     $("#home").hide()
     $("#register").hide()
