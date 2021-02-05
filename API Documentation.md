@@ -1,20 +1,6 @@
 # COVID - APP
 
 ### base url : http://localhost:PORT/
-### depedencies :
-- axios
-- bcryptjs
-- cors
-- dotenv
-- express
-- google-auth-library
-- jsonwebtoken
-- nodemon
-- pg
-- sequelize
-- sequelize-cli
-
-
 
 -----
 
