@@ -10,7 +10,6 @@ function auth() {
         $("#edit-user-nav").show()
         $("#rs-rujukan-nav").show()
         $("#logout-nav").show()
-        $("#updateProvinsi").hide()
         getDataCovid()
     } else {
         $(".g-signin2").show()
@@ -22,7 +21,6 @@ function auth() {
         $("#login").show()
         $("#register").hide()
         $("#home").hide()
-        $("#updateProvinsi").hide()
     }
 }
 
@@ -39,6 +37,7 @@ function login() {
     })
         .done((response) => {
             console.log(response)
+            localStorage.setItem("email", response.email)
             localStorage.setItem("access_token", response.access_token);
             localStorage.setItem("province", response.province)
             localStorage.setItem("name", response.name)
@@ -81,6 +80,7 @@ function register() {
 function getProfile() {
     $("#inputNama").val(localStorage.getItem("name"))
     $("#inputProvinsi").val(localStorage.getItem("province"))
+    $("#inputEmail").val(localStorage.getItem("email"))
     $("#inputPassword").val("")
 }
 

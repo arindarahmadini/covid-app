@@ -2,7 +2,6 @@ $(document).ready(() => {
   $("#home-nav").on("click", (e) => {
     e.preventDefault()
     $("#detail-hospital").hide()
-    $("#register").hide()
     $("#home").show()
   })
   $("#rs-rujukan-nav").on("click", (e) => {
@@ -13,6 +12,7 @@ $(document).ready(() => {
     $("#title-list-rujukan").show().html(`Daftar RS Rujukan Di Provinsi ${localStorage.getItem("province")}`)
     $("#main-detail-rujukan").hide();
     $("#detail-hospital").show()
+    $("#register").hide()
     $("#home").hide()
     $("#register").hide()
   })
@@ -34,7 +34,8 @@ $(document).ready(() => {
     $("#inputNama").show()
     $("#inputPassword").show()
     $("#inputProvinsi").show()
-    $("#email-section-input").hide()
+    $("#email-section-input").show()
+    $("#inputEmail").prop( "disabled", true );
     $("#home").hide()
     $("#direct-login").hide()
     $("#detail-hospital").hide()
