@@ -44,6 +44,7 @@ function login() {
             auth();
         })
         .fail((xhr, text) => {
+            swal("Login failed", "Invalid Email or Password", "error");
             console.log(xhr, text);
         })
         .always((_) => {
