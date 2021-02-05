@@ -1,13 +1,42 @@
 const getDataHospital = () => {
-  $.ajax({
-    url: 'http://localhost:3000/dataHospital',
-    method: "GET",
-    headers: {
-      token: localStorage.getItem("access_token")
-    }
-  })
-  .done( data => {
-    data.forEach( res => {
+
+  const dataHospital = JSON.parse(localStorage.getItem("dataHospitals"))
+
+  if (!dataHospital) {
+    $("#list-rujukan").append(`
+      <div class="text-center" style="margin-top: 200px;">
+        <div class="spinner-border" style="width: 75px;height: 75px" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    `)
+
+    $.ajax({
+      url: 'http://localhost:3000/dataHospital',
+      method: "GET",
+      headers: {
+        token: localStorage.getItem("access_token")
+      }
+    })
+    .done( data => {
+      localStorage.setItem("dataHospitals", JSON.stringify(data))
+      $("#list-rujukan").empty()
+      data.forEach( res => {
+        const dataStringify = JSON.stringify(res)
+        $("#list-rujukan").append(`
+          <div class="card" onclick='localStorage.setItem("selectedRs", JSON.stringify(${dataStringify}))' style="margin-top: 10px; cursor: pointer;">
+            <div class="card-body item-rs">
+              ${res.name}
+            </div>
+          </div>
+        `);
+      })
+    })
+    .fail( err => {
+      console.log(err);
+    })
+  } else {
+    dataHospital.forEach( res => {
       const dataStringify = JSON.stringify(res)
       $("#list-rujukan").append(`
         <div class="card" onclick='localStorage.setItem("selectedRs", JSON.stringify(${dataStringify}))' style="margin-top: 10px; cursor: pointer;">
@@ -17,24 +46,9 @@ const getDataHospital = () => {
         </div>
       `);
     })
-  })
-  .fail( err => {
-    console.log(err);
-  })
-}
-
-$(document).ready(() => {
-  const selectedRs = JSON.parse(localStorage.getItem("selectedRs"))
-
-  if (selectedRs) {
-    $("#list-rujukan").hide();
-    $("#main-detail-rujukan").show();
-  } else {
-    $("#list-rujukan").show();
-    $("#main-detail-rujukan").hide();
   }
-
-});
+  
+}
 
 $(document).on("click", ".item-rs", () => {
   setTimeout(() => {
