@@ -1,4 +1,5 @@
 module.exports = (err, req, res, next) => {
+  console.log(err)
   if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
     let errorMsg = []
     err.errors.forEach(el => {

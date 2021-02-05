@@ -53,7 +53,7 @@ class UserController {
         })
       })
       .then(dataCovid => {
-        const provinsi = ''
+        let provinsi = ''
         dataCovid.data.forEach((el) => {
           if (el.attributes.Provinsi === prov) {
             provinsi = el.attributes
