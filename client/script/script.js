@@ -102,6 +102,7 @@ function update() {
         }
     })
         .done(response => {
+            localStorage.removeItem("dataHospitals")
             auth()
         })
         .fail((xhr, text) => {
